@@ -43,7 +43,7 @@ console.log(`+"12"+12 = ${+"12"+12}`)
 //1.
 
 console.log('a'+`${+"a"}`+'a'+'s');
-console.log('1.  ', `a${+'a'}as`);
+console.log('1.   ', `a${+'a'}as`);
 
 //2.
 
@@ -53,7 +53,7 @@ function calculate(num1, num2, operation){
 function sum(a,b){
     return a+b;
 }
-console.log(calculate(10,2,sum));
+console.log("2.   ",calculate(10,2,sum));
 
 //3.   functon (index)(a,b) ;  if index = 5 then return a+b,  else return a-b
 function fun(index){
@@ -66,4 +66,4 @@ function fun(index){
             return (a-b);
         }
 }
-console.log(`3.    `,fun(3)(10,3));
+console.log(`3.   `,fun(3)(10,3));
