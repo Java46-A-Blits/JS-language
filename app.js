@@ -1,69 +1,56 @@
-// console.log("Hello world !!!");
-// OUtput for VAR is 3 3 3 
-// for(var i=0; i<3; i++){
-//     setTimeout(function(){
-//         console.log(i);
-//     })
-// }
+/////////  STRINGS  \\\\\\\
 
-// output for VAR is 3 3 3 
-// for(let i=0; i<3; i++){}
-//     setTimeout(function(){
-//         console.log(i);
-//     })
-// }
-// console.log(`a`,`${"12"-"a"}` ,`as`)
+// const str1 = "abc";
+// const str2 = "abc";
+// console.log(`str1 == str2 is ${str1==str2}`);// -> str1==str2 is true
+// console.log(`str1 < "s" is ${str1 < "s"}`);  // -> str1 < "s" is true
+// console.log(`"123" > 23 is ${"123">23}`);    // -> 123" > 23 is true (string and num => both  number)
+// console.log(`"123" > "23" is ${"123">"23"} `); // -> "123" > "23" is false (string and string => both string)
+// console.log(`"abc" > 23 is ${"abc">23} `);  // logical  expression conains Nan will give a false
+// console.log(`"abc" < 23 is ${"abc"<23} `);  // -> the same as of above
+// console.log(`"abc" != 23 is ${("abc"!=23)} `); // != equals to  !("abc"==23) then ! false is true. 
+// console.log(`+"12" + 12 = ${+"12" + 12}`) //  -> 24 
+// console.log(`"12" + 12 = ${"12" + 12}`) //  -> 1212 
+// /// **********    
+// function stringProcessing(str){
+//     const strP=""+str;
+//     console.log(`${strP}[4] is ${strP[4]}`);
+//     console.log(`lenght of ${strP} is ${strP.length}`);
+//     console.log(`${str} includes "sha" is ${strP.includes("sha")}`);
+//     console.log(`substring of ${strP} beginning from index 2 to index 5 is ${strP.substring(2,5)}`);
+//     console.log(`index of letter "a" is ${strP.indexOf("a")} ; last index of letter "a" is ${strP.lastIndexOf("a")}`)
 
-// // console.log("ab"-12);       
-// console.log("12"+12,'"12"+12')
-console.log(`+"12"+12 = ${+"12"+12}`)
-// console.log(`a`,`${12-"a"}` ,`as`)
-// console.log(`a`,`${+'a'}` ,`as`)
-// console.log("ab"-12);
-// console.log(this)
-
-
-
-// function test(a){
-//     return function f(b,c){
-//         return a*(b+c);
-//     };
-// }
-//  console.log( test(5)(10, 2) );
-
-//////////////////////////////   HOME WORK   \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
- 
-// 1. print 'ananas' with  opnly  two letters 'a' and 's'
-
-// 2. wrie function 'calculate' for any arithmethic operaion on two  numbers
-
-// 3. write any example for runnning the following expression: function(5)(10,3)
+// } stringProcessing("Sashaaa");
 
 
-//1.
+////////////////     HOMEWORK 11  - STRINGS  \\\\\\\\\\
 
-console.log('a'+`${+"a"}`+'a'+'s');
-console.log('1.   ', `a${+'a'}as`);
-
-//2.
-
-function calculate(num1, num2, operation){
-    return operation(num1, num2);
-}
-function sum(a,b){
-    return a+b;
-}
-console.log("2.   ",calculate(10,2,sum));
-
-//3.   functon (index)(a,b) ;  if index = 5 then return a+b,  else return a-b
-function fun(index){
-    if (index == 5)
-    return function (a,b){
-        return a+b;
-    }
-    else
-        return function (a,b){
-            return (a-b);
+function encode(num, baseString){
+  
+    let wrongFlag = false;
+        for(let i=0; i<baseString.length; i++){
+            if( i !== baseString.lastIndexOf(baseString[i])){
+                wrongFlag = true;
+                console.log(`basestring has repeaed sign ${baseString[i]}`)
+            }
         }
+    if (! wrongFlag){
+            let res = "";
+            do {
+                const digit = num % baseString.length;
+                const symb = baseString[digit];
+                res = symb + res; 
+                num = Math.trunc(num / baseString.length); 
+            } while(num >= 1);
+        return res;
+    }    
 }
-console.log(`3.   `,fun(3)(10,3));
+
+console.log(encode(10,'01'));
+
+
+// write function --->>>   function encode (num, codingString)
+// codingString - any  string with  no  repeated symbols 
+//base = length of codingString
+//algorithm the same
+//getSymbol (digit, codingString) using operator []
