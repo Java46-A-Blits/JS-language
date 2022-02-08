@@ -1,56 +1,68 @@
-/////////  STRINGS  \\\\\\\
+//////////// ***   ARRAYS   *** \\\\\\\\\\\\\
+const ar = [2,100,9,80];
+// ar.sort(function(a,b){
+//     return a-b; 
+// });
+// ar.sort((a,b) => a-b);
+// console.log(`array is ${ar.toString()}`);
 
-// const str1 = "abc";
-// const str2 = "abc";
-// console.log(`str1 == str2 is ${str1==str2}`);// -> str1==str2 is true
-// console.log(`str1 < "s" is ${str1 < "s"}`);  // -> str1 < "s" is true
-// console.log(`"123" > 23 is ${"123">23}`);    // -> 123" > 23 is true (string and num => both  number)
-// console.log(`"123" > "23" is ${"123">"23"} `); // -> "123" > "23" is false (string and string => both string)
-// console.log(`"abc" > 23 is ${"abc">23} `);  // logical  expression conains Nan will give a false
-// console.log(`"abc" < 23 is ${"abc"<23} `);  // -> the same as of above
-// console.log(`"abc" != 23 is ${("abc"!=23)} `); // != equals to  !("abc"==23) then ! false is true. 
-// console.log(`+"12" + 12 = ${+"12" + 12}`) //  -> 24 
-// console.log(`"12" + 12 = ${"12" + 12}`) //  -> 1212 
-// /// **********    
-// function stringProcessing(str){
-//     const strP=""+str;
-//     console.log(`${strP}[4] is ${strP[4]}`);
-//     console.log(`lenght of ${strP} is ${strP.length}`);
-//     console.log(`${str} includes "sha" is ${strP.includes("sha")}`);
-//     console.log(`substring of ${strP} beginning from index 2 to index 5 is ${strP.substring(2,5)}`);
-//     console.log(`index of letter "a" is ${strP.indexOf("a")} ; last index of letter "a" is ${strP.lastIndexOf("a")}`)
+// ADDING ELEMENTS TO  THE END OF ARRAY
 
-// } stringProcessing("Sashaaa");
+ar[ar.length]=200;
+console.log(ar);
+ar.push(300, 25);
+console.log(ar);
+const ar1 = [-8,30,-57];
+// ar.push(ar1);  there will be added array but not separated numbers
+// we apply spread operator " ... " to separate array elements. 
+ar.push(...ar1);
+console.log(`after push ar1 [-8,30,-57]  ${ar}`);
+// WE APPLY  TO ADD AN ELEMENT TO  THE BEGINNING "unshift"
+const ar2 = [27,35]
+ar.unshift(...ar2); // the "..." spread operator works the same as before
+console.log(` after "spread" ar2 and "unshift ar", ar now ${ar}`);
+//
+// method splice for inserting or replacing any  elements anywhere
+// 1'st argument - getting index for insert or relacement. 
+// 2'd  argument - element number of the elements to  be deleted fron the same index (included)
+//     (if 0 the slpice applied just for insert)
+// 3'd  argument - an element itself. 
+ar.splice(2,0,1,2)
+console.log(`after splice "1,2," from the 2'd index  ${ar}`)
+//REMOVING ELEMENTS
+let el = ar.pop(); // removes the last element of array and returns it
+console.log(`"pop" - removed element is ${el},  and array  now ${ar}`)
+// to  remove element from beginning we use shift 
+el = ar.shift()
+console.log(`"shift" - 1'st element ${el} was removed and array now ${ar}`)
+// to  remove 2,100,9,80,200
+ar.splice(3,5)
+console.log(ar) // removes 5 elements from index3 (included)
+//includes,  indexOf, 
+// 2D arrays
+const matrix1 = [[1,2,3],[4,5,6],[7,8,9],[10,11,12]]
+const matrix2 = [[100,20],[50,-5],[34,5]]
 
-
-////////////////     HOMEWORK 11  - STRINGS  \\\\\\\\\\
-
-function encode(num, baseString){
-  
-    let wrongFlag = false;
-        for(let i=0; i<baseString.length; i++){
-            if( i !== baseString.lastIndexOf(baseString[i])){
-                wrongFlag = true;
-                console.log(`basestring has repeaed sign ${baseString[i]}`)
+    function displayMatrixTr(matrix){
+        for(let i=0; i<matrix[i].length; i++){
+            let row = '';
+            for (let j=0; j<matrix.length; j++){
+                row = row + matrix[j][i] + '  ';
             }
+            console.log(row);
         }
-    if (! wrongFlag){
-            let res = "";
-            do {
-                const digit = num % baseString.length;
-                const symb = baseString[digit];
-                res = symb + res; 
-                num = Math.trunc(num / baseString.length); 
-            } while(num >= 1);
-        return res;
-    }    
-}
+    }
 
-console.log(encode(10,'01'));
-
-
-// write function --->>>   function encode (num, codingString)
-// codingString - any  string with  no  repeated symbols 
-//base = length of codingString
-//algorithm the same
-//getSymbol (digit, codingString) using operator []
+    function displayMatrix(matrix){
+        for(let i=0; i<matrix.length; i++){
+            let row = '';
+            for (let j=0; j<matrix[i].length; j++){
+                row = row + matrix[i][j] + '  ';
+            }
+            console.log(row);
+        }
+    }
+displayMatrix(matrix1);
+displayMatrixTr(matrix1);
+displayMatrix(matrix2);
+displayMatrixTr(matrix2)
