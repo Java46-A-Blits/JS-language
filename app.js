@@ -1,10 +1,10 @@
 //////////// ***   ARRAYS   *** \\\\\\\\\\\\\
-// const ar = [2,100,9,80];
-// ar.sort(function(a,b){
-//     return a-b; 
-// });
-// ar.sort((a,b) => a-b);
-// console.log(`array is ${ar.toString()}`);
+const ar = [2,100,9,80];
+ar.sort(function(a,b){
+    return a-b; 
+});
+ar.sort((a,b) => a-b);
+console.log(`array is ${ar.toString()}`);
 
 // ADDING ELEMENTS TO  THE END OF ARRAY
 
@@ -39,41 +39,41 @@
 // console.log(ar) // removes 5 elements from index3 (included)
 //includes,  indexOf, 
 // 2D arrays
-const matrix1 = [[1,2,3],[4,5,6],[7,8,9],[10,11,12]]
-const matrix2 = [[100,20],[50,-5],[34,5]]
+// const matrix1 = [[1,2,3],[4,5,6],[7,8,9],[10,11,12]]
+// const matrix2 = [[100,20],[50,-5],[34,5]]
 
-    function displayMatrixTr(matrix){
-        for(let i=0; i<matrix[i].length; i++){
-            let row = '';
-            for (let j=0; j<matrix.length; j++){
-                row = row + matrix[j][i] + '  ';
-            }
-            console.log(row);
-        }
-    }
+//     function displayMatrixTr(matrix){
+//         for(let i=0; i<matrix[i].length; i++){
+//             let row = '';
+//             for (let j=0; j<matrix.length; j++){
+//                 row = row + matrix[j][i] + '  ';
+//             }
+//             console.log(row);
+//         }
+//     }
 
-    function displayMatrix(matrix){
-        for(let i=0; i<matrix.length; i++){
-            let row = '';
-            for (let j=0; j<matrix[i].length; j++){
-                row = row + matrix[i][j] + '  ';
-            }
-            console.log(row);
-        }
-    }
-displayMatrix(matrix1);
-displayMatrixTr(matrix1);
-displayMatrix(matrix2);
-displayMatrixTr(matrix2)
+//     function displayMatrix(matrix){
+//         for(let i=0; i<matrix.length; i++){
+//             let row = '';
+//             for (let j=0; j<matrix[i].length; j++){
+//                 row = row + matrix[i][j] + '  ';
+//             }
+//             console.log(row);
+//         }
+//     }
+// displayMatrix(matrix1);
+// displayMatrixTr(matrix1);
+// displayMatrix(matrix2);
+// displayMatrixTr(matrix2)
 
 ///////////// COMPARATOR \\\\\\\\\
 
 // ******* Hw solution task  1
 
-// const array  = [13, -28, -15, -11, 12, -45, 35, 15, 22];
- const array = [13, 28, 4, 15, 25, -10, 40, 17,27];
+const array1  = [13, -28, -15, -11, 12, -45, 35, 15, 22];
+const array2 =  [13, 28, 4, 15, 25, -10, 40, 17,27];
 
-const comparator = (a,b) => {return  a%2==0 ? (b%2==0 ? 1 :-1) : (b%2==0 ? 1 : -1 )}
+const comparator = (a,b) => {return  a%2==0 ? (b%2==0 ? a-b : -1) : (b%2==0 ? 1 : b-a )}
 
-array.sort(comparator);
-console.log(array);
+console.log(array1.sort(comparator));
+console.log(array2.sort(comparator));
