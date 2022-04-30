@@ -1,325 +1,397 @@
-// const point = {
-//     x:3,
-//     y:4
+//////////////////  CW18-19 - JS EXAM 
+// //EX1
+// function sayHi(){
+//     console.log(name);   // -> undefined
+//     console.log(age);    // -> reference error
+//     var  name = "Lydia"
+//     let age = 21
+// }
+// sayHi();
+// // (ans:D  -  udefined and reference error)
+//////////////////////////////----- EX-2  - What's the output?
+// for (var i=0; i<3; i++){
+//     setTimeout(()=> console.log(i),1); /// ->333
+// }
+// for (let i=0; i<3; i++){
+//     setTimeout(()=> console.log(i),1); /// -> 012
+// }
+// ans:(c - 333 and 012)
+//////////////////////////////----- EX-3  - What's the output?
+// +true ; // ->1
+// !"Lydia" ; // -> false
+//////////////////////////////----- EX-4  - What's the output?
+// const shape = {
+//     radius:10,
+//     diameter (){
+//         return this.radius*2
+//     },
+//     perimeter:()=> 2*Math.PI*this.radius
 // };
-// function displayPointInSpace(z, t){
-//     console.log(`x: ${this.x}, y: ${this.y}, z:${z}, t:${t}`)
+// console.log(shape.diameter())   //-> 20
+// console.log(shape.perimeter())  //-> NaN- arrow function's "this" created inside the Obj, therefore it's invisible in obj 
+// "shape" ; this.radius udefined, undefined*num = NaN  
+//////////////////////////////----- EX-5  - Which one is true?
+// const bird = {
+//     size:"small"
 // }
-// // displayPointInSpace(10,20) // --> x: undefined, y: undefined, z:10, t:20
-// // point.method = displayPointInSpace;
-// // point.method(10,20)             // -->x: 3, y: 4, z:10, t:20
-// // displayPointInSpace.call(point, 10, 20);
-// // displayPointInSpace.mybind(point, 10,20)();   // must () to  call  a function and IT RETURNS A FUNCTIONAL OBJECT
-// // displayPointInSpace.apply(point, [10,20]);
+// const mouse = {
+//     name: "Mickey",
+//     small: true
+// }
+// //console.log(mouse.bird.size)  // not valid; 
+// console.log(mouse[bird.size]) // -> (valid)   bird.size <-> bird["size"] ==="small" ->> mouse["small"] === mouse.small -> true ! 
+// console.log(mouse[bird["size"]]) // (valid)
+// //////////////////////////////----- EX-6  - What's the output?
+// let c={greeting: "Hey!"};  // c is a refirence to  an object 
+// let d; 
+// d=c;                      // now d is a reference to  the SAME object !!! 
+// c.greeting = "Hello";
+// console.log(d.greeting)  // -> "Hello"
+//////////////////////////////----- EX-7  - What's the output?
 
-// Function.prototype.mybind = function(thisObj, ...args){
-//     //  this - reference to  any  functional object ( as 'displayPointInSpace')
-//     console.log('inside mybind')
-//     // thisObj - refence to  any object (as a 'point')
-//     return (...params)=>{
-//         thisObj.method12345 = this;
-//         const res = thisObj.method12345(...args.concat(params)); // 'params' are for the 'funDisplay' or 'funDisplayArguments' or
-//                                                                  // 'funDisplayMixed' following functions
-//         //thisObj.method12345(...args.concat(params)); // works even if you don't assign & return 'res'
-//         delete thisObj.method12345;
-//         return res; /// ???????
+// /// primitive and objects behavior are not the same !!!
+// let a=3;   // primmitive 
+// let b=new Number(3);  // refence (obj)
+// let c=3;
+// console.log(a == b)   // true == checks the value but not type
+// console.log(a === b)  //false
+// console.log(b === c)  // false
+//////////////////////////////----- EX-8  
+// function bark(){
+//     console.log("Woof!")
+// }
+// bark.animal='dog'; // -> not syntax error
+//////////////////////////////----- EX-9 What's the output ?
+// function Person(firstName, lastName){
+//     this.firstName = firstName
+//     this.lastName  = lastName
+// }
+// const lydia = new Person("Lydia", "Hallie")  // -> creating a new object
+// const sarah = Person("Sarah", "Smith")   // -> when no'new' we just calling a funcion, since no 'return', we get 'undefined'
+// console.log(lydia) // -> Person { firstName: 'Lydia', lasrName: 'Hallie' }
+// console.log(sarah)// -> undefined 
+//////////////////////////////----- EX-10 What's the output ?
+// function sum (a,b){
+//     return a+b
+// }
+// console.log(sum(1,"2") );//-> "12" as a string. JS looking for concationation method in string,  but if it was - then it was 
+// doing arithmetical calculation
+//////////////////////////////----- EX-11 What's the output ?
+// let number=0
+// console.log(number++)  // 0  postfix operation,  number=1 but 0 returned
+// console.log(++number)  // 2  prefix operation, number = 2 ( ++ number=1)  and 2 will be returned 
+// console.log(number)    // 2 
+//////////////////////////////----- EX-12 What's the output ?
+// function checkAge(data){
+//     if (data === {age:18}){
+//         console.log("You are an adult!")
+//     } else if(data == {age:18}){
+//         console.log("You are still an adult.")
+//     } else {
+//         console.log("Hmm you don't have an age I guess")
 //     }
 // }
-// // //////////////////-----    ARGUMENTS PASSED AT THE FUNCTION CALL   -----\\\\\\\\\\\\\ (TYPICAL SAMPLE OF FUNCTION INSIDE THE FUNCTION )
-// const funDisplay = displayPointInSpace.mybind(point)   
-// funDisplay(10,20)       // -->x: 3, y: 4, z:10, t:20 (function call) :  !!! FUNCTION INSIDE THE FUNCTION
-
-// // //////////////////-----    ARGUMENTS BOUND BY  THE METHOD 'mybind'   -----\\\\\\\\\\\\\
-// const funDisplayArguments = displayPointInSpace.mybind(point, 30,40)
-// funDisplayArguments()
-
-// // //////////////////-----    MIXED -  PART OF ARGUMETS BOUND AND PART BY THE FUNCTION CALL   -----\\\\\\\\\\\\\
-// const funDisplayMixed = displayPointInSpace.mybind(point,50);
-// funDisplayMixed(60)
-
-///////**********   Namaste#13 - CLOSURE FUNCTION PROBLEM --- 1 to 5 progression count with  delay (problem when let replaced by var, 
-// as the loop count is much faster than 'setTimeout' completed, and when 'i' is var it will  point at the same obj. value i.e '6')
-// function x(){
-//     for (let i=1; i<=5; i++){
-//         setTimeout(function(){
-//             console.log(i)
-//             }, i*1000);
+// checkAge({age:18}) // -> Hmm you don't have an age I guess ;
+// // OBJECTS CAN'T BE COMPARED WITH POINTERS BY === OR == ; POINTERS CAN BE COMPARED WITH POINTERS ONLY 
+//////////////////////////////----- EX-13 What's the output ?
+// function getAge(){
+//     "use strict"  // "use strict" requires "let" or "var" or "const". 
+//     age = 21
+//     console.log(age)
+// }
+// getAge() // -> reference error: age is not defined
+//------------------------------------- EX-14 What's the value of sum ?
+// const sum=eval("10*10+5")  // eval  used to  force  a number to  become a string
+// console.log(sum) //-> 105
+//------------------------------------- EX-15 What's the output?
+// var num=8
+// var num=10
+// console.log(num) //->10
+//------------------------------------- EX-16 What's the output?
+// const obj ={a:"one", b:"two", a:"three"}
+// console.log(obj) //->{ a: 'three', b: 'two' },  the same field (key name) is overwritten
+//------------------------------------- EX-17 What's the output?
+// const foo = ()=> console.log("First")
+// const bar = ()=> setTimeout(()=> console.log("Second"))
+// const baz = ()=> console.log("Third")
+// foo()
+// bar()
+// baz()
+// first, third, second
+//------------------------------------- EX-18 What's the output?
+// console.log(!!null) // !null->true; !!null==false
+// console.log(!!"")   // !""->true, the empty sting is  false! ; !!""->false
+// console.log(!!1)    // !1->false;   !!1->true
+//------------------------------------- EX-19 What does this return?
+// consol.log([..."Lydia"]) //[ 'L', 'y', 'd', 'i', 'a' ] -  spread operator
+//------------------------------------- EX-20 
+// const a=10;
+// const b=11;
+// const c=5;
+// if(a<b<c) { 
+//     console.log("kuku") // will print 'kuku' as a<b=true=1, and 1<5 is true. To fix it we need a<b && b<c
+// }
+//------------------------------------- EX-21 What's the output?
+// let person = {name: "Lydia"}
+// const members = [person]
+// person = null
+// console.log(members) //-> [ { name: 'Lydia' } ]
+// 
+// function fun (Person){
+//         // Person = null     // -> will change the person parameter (pointer of an object person) to null inside fun only!
+//         Person.id = 12  // -> this will change the "id" field of the object person using the pointer Person!!!!!!!!!!!!!!
+//         console.log('*',Person)
 //     }
-//  console.log('Test')
+// const person = {id:213, name:'Petya'}
+// fun(person)
+// console.log(person)  // -> { id: 213, name: 'Petya' }
+//------------------------------------- EX-22 What's the output?
+// const person={
+//     name: "Lydia",
+//     age: 21,
 // }
-// x()
-
-////////////   closure function problem    \\\\\\\\\ ---  1 to 5 progression count with  delay (problem resolved with var
-// by  wrapping ""by the "enclose" function)
-
-// function x(){
-//     for (var i=1; i<=5; i++){
-
-//         function enclose(i){
-//             setTimeout(function(){
-//                   console.log(i)
-//                   }, i*1000);
-//         }
-//         enclose(i); //  every time we call 'eclosure(i)' it will  create a new copy of 'i'
-//     }   
-//  console.log('Test')
+// for (const item in person){// iteral keys of an object
+//     console.log(item) 
 // }
-// x()
- 
-/////////////********** Namaste#14 ******** closure sample + interview question \\\\\\\\\\\\\\\\\\
+// // "name", "age"
+//------------------------------------- EX-23 What's the output?
+// console.log(3+4+"5") // -> "75"
+// const a={}
+// const b={ku: "b"};
+// // const b= {key: "b", toString: function(){ return this.key}} // or we can replace a[b]=123 with a["b"]=123
+// const c={key: "c"}
+// a[b]=123; // JS converts object to "toString" but since no object "a" no "b" either have a method toString they rewrite
+// // to the same field [object Object]
+// a[c]=456;
+// console.log(a[b])    // -> 456
+// console.log(a)       //{ '[object Object]': 456 }
+// let a1
+// let a2 = undefined 
+// console.log(a1==a2) // -> true
 
-// function outest(){
-//     let c=20;             // let instead of var, but it will still print 'c' as 'outest' forms a closure with 'inner'
-//     function outer (b){
-//         let a = 10;       // let instead of var, but it will still print 'a'--> as 'outer' forms a closure with 'inner'
-//         function inner() {
-//             console.log(a, b, c)
-//         }
-//         //inner();
-//         return inner;
+//------------------------------------- EX-25 What's the output?
+// const numbers = [1,2,3];
+// numbers[10] = 11;
+// console.log(numbers.length) // -> 11
+//------------------------------------- EX-26 What's the value of num?
+// const num = parseInt ("7wqe6") //  parsing to number until the first sign appear
+// console.log(num)
+//------------------------------------- EX-27 What's the output?
+// function getInfo(member, year){
+//     member.name = "Lydia";
+//     year = "1998"
+// }
+// const person = {name: "Sarah"};
+// const birthyear = "1997";
+// getInfo(person, birthyear)
+// console.log(person, birthyear) // { name: 'Lydia' } 1997
+//------------------------------------- EX-28 What's the output?  ?????????????????????????????????????????
+// function greeting(){
+//     throw "Hello world !";
+// }
+// function sayHi(){
+//     try{
+//         const data = greeting(); //  as the "greeing" throws an exception it will jump to the "catch" taking with it an 
+//         // exception "Hello world"
+//         console.log("It worked !", data);
+//     } catch (e){
+//         console.log("Oh no an error:", e); 
 //     }
-//     return outer;
 // }
-// let a=100;   // won't print 100 as the closure of 'inner' has already 'a' defined, but if it wasn't it would print 100 !!!!!!!!! 
-// outest()('Hello')();
-
-    // function outer (){
-    //     let a = 10;
-    //     function inner() {
-    //         console.log(a)
-    //     }  
-    //      return inner; // inner()
-    // }
-    // outer()() // outer()
-
-// function counter(){
-//     var count = 0;
-//     function incrementCounter(){
-//             count++
-//             console.log(count)
+// sayHi(); // -> Oh no an error: Hello world !
+//------------------------------------- EX-29 What's the output?
+// const numbers = [1, 2, 3, 4, 5];
+// const [y] = numbers;  // [y] = [1,2,3,4,5]  distucture of an array
+// console.log(y);     // -> 1
+//------------------------------------- EX-30 What's the output?
+// const user = {name: "Lydia", age: 21};
+// const admin = {admin: true, ...user}; 
+// console.log(admin) // -> { admin: true, name: 'Lydia', age: 21 }
+//------------------------------------- EX-31 What's the output?
+// const settings = {
+//     username: "Lydiahallie",
+//     level: 19,
+//     health: 90
+// };
+// const data = JSON.stringify(settings, ["level", "health"]); // considered only specified keys
+// console.log(data); // ->{"level":19,"health":90}
+//------------------------------------- EX-32 What's the output?
+// let num = 10;
+// const increaseNumber = ()=> num++;
+// const increasePassedNumber = (number) => number++
+// const num1 = increaseNumber();
+// const num2 = increasePassedNumber(num1)
+// console.log(num1)
+// console.log(num2)
+//------------------------------------- EX-33 What's the output?
+// [1, 2, 3, 4].reduce((x,y)=> console.log(x,y)) //1 2 -> undefined 3 -> undefined 4 // if no initial value passed to x 
+//then it will take a first element of an array. For the next iteration no return value for x, therefore it's undefined.
+//------------------------------------- EX-34 What's the output?
+// function addTolist(item, list){
+//     return list.push(item) // push returns THE LENGTH OF THE ARRAY !!!!!
+// }
+// const result = addTolist("apple", ["banana"])
+// console.log(result) // -> 2
+//------------------------------------- EX-35 What's the output?
+// const list = [1+2, 1*2, 1/2] ; 
+// console.log(list) // -> 3, 2, 0.5
+//------------------------------------- EX-36 What's the output?
+// function sayHi(name){
+//     return `Hi there, ${name}`
+// }
+// console.log(sayHi()) // -> Hi there, undefined
+//------------------------------------- EX-37 What's the output?
+// console.log("I want pizza" [0]); // -> I
+//------------------------------------- EX-38 What's the output?
+// function checkAge (age){                                   // to fix: add 'message' inside to the param 'age'
+//     if (age<18) {
+//         const message = "Sorry you're too young"           // to fix: remove 'const'
+//     } else {
+//         const message = " Yay ! You're old enough !"       // to fix: remove 'const'
 //     }
-//     return incrementCounter
+//     return message
 // }
-// var counter1 = counter();
-// counter1(); counter1(); counter1(); counter1()
- 
-// var counter2 = counter(); //creates a new counter 
-// counter2(); counter2()
+// console.log(checkAge(21)) // -> ReferenceError: message is not defined
+//------------------------------------- EX-39 What's the output?
+// function sum(num1 = , num2=num1){    // if it was sum(num2=num1, num1) then in the function scope num2 = 10 and num1 undefined.   
+//                                      // if it was sum(num1=10, num2) and function call sum(undefined, 10) then result -> 20.   
+//     console.log(num1 + num2)
+// }
+// sum(10); //  -> 20   
+//------------------------------------- EX-40 What's the output?
+// let newList = [1,2,3].push(4)
+// console.log(newList.push(5))     // -> TypeError: newList.push is not a function -> push returns a number (4)
+                                    // since there is no push operatina on a number -> Typerror
+//------------------------------------- EX-41 What's the output?
+// <div onclick="console.log('div')">
+//   <p onclick="console.log('p')">
+//     Click here!
+//   </p>
+// </div>
+// Ans: (A)-> p div - function propagation - when first the child (paragraph) function performed, then parent (div)
 
-//************************************** */
-
-// console.log(a)  // --> undefined 
-// var a;          // don't have to  declare before a code
-
-// console.log (b); // --> ReferenceError: Cannot access 'b' before initialization - temporal dead zone 
-// let b;              // have to  declare before a code  
-// console.log (b);    // --> undefined    
-
-///// --- #8 - THE SCOPE CHAIN, SCOPE & LEXICAL ENVIRONMENT     ----- \\\\\\
-// will give :
-// [Function: a]
-// undefined
-// undefined
-// 10
-
-// function a(){
-//     var b=10;
-//     c()
-//     function c(){
-//          console.log(b) // --> prints 10 
-
+//------------------------------------- EX-42 What's the output?
+// const person = {name: "Lydia"};
+// function sayHi(age){
+//     return `${this.name} is ${age}`;
+// }
+// console.log(sayHi.call(person,21)); // Lydia is 21
+// console.log(sayHi.bind(person,21)); // [Function: bound sayHi] to fix it : console.log(sayHi.bind(person,21)()) 
+                                       // (bind called from '.log' will return a new functional object 'to string' 
+//------------------------------------- EX-43 What's the output?
+// function sayHi(){
+//     return(()=> 0)(); // if no  () then return is a function, () is a call for a function the result of which is a number. 
+// }
+// console.log(typeof sayHi()); // -> number ????????????????????????????????????????????????????
+//------------------------------------- EX-44 What's the output? ????????????
+// to  see which is coherced as 'false' we can  use Boolean('expression') using the JS prompt
+// Boolean(0) -> false
+// Boolean("") -> false
+// Boolean(" ") -> true
+// Boolean(new Boolean(false)) -> true (boolean of a new object is true)
+// Boolean(new Number(0)) -> true (boolean of a new object is true)
+// Boolean(undefined) -> false 
+// 
+// 0||b -> b ; bacause 0-> false
+// 0??b -> 0 ; (null or undefined) because 0 is not Null nor Undefined. 
+//------------------------------------- EX-45 What's the output?
+// ( ()=> {
+//     let x,y;
+//     try{
+//         throw new Error();
+//     } catch (x){
+//         (x=1),(y=2);     // aas there is to y in this scope, y=2 assigned to the outer scope 
+//         console.log(x); // 1 - local  x in the cope of the 'catch' block
 //     }
-//     console.log(b) // --> prints 10
+//     console.log(x);     // -> no 'x' assigned within a
+//     console.log(y);     // -> 2
+// })();    /// "()" for return 
+//------------------------------------- EX-46 What's the output?
+// console.log ([[0,1], [2,3]].reduce((acc, cur)=> {return acc.concat(cur)}, [1,2]) )// -> [1, 2, 0, 1, 2, 3]
+//console.log ([[0,1], [2,3]].reduce((acc, cur)=> acc.concat(cur), [1,2]) )// -> [1, 2, 0, 1, 2, 3]
+//********************************************************************************************************* */
+//**************************** W E B I N A R  - 19 *******************************/
+/// *********** EX - 1 TEST EXTENDES///
+// class A {
+//     x=123; // if #x (private) then won't print, #x is visible inside class A (and it's methods)only. 
+//            // _x public.  to  access it from outside of a class we can add a getter (get x(){ return this.#x})   
+//            // inside the class and simple  access it from  outside by "b.x"
+//     //fooA() {return this.x}
 // }
-// console.log(b) ; // --> undefined ? 
-// a()
+// class B extends A {
+//     y=456;
+//     fooB(){}
+// }
+// let b = new B();
+// console.log(b);   // -> B { x: 123, y: 456 } 
+// for (key in b){   // -> for of ? 
+//     console.log(key)
+// }
 
-///// --- # 10  BLOCK SCOPE & SHADOWING  ----- \\\\\\
+// let c = {xx: 111}
+// let d = Object.create(c) // creates a new object 'd' which prototype is object 'c'
+// d.yy = 222
+// for (key in d){
+//     console.log(key)
+// }
+// console.log(d)   // -> { yy: 222 } prints only the property of the last inherited obj. 
+// to  print the whole obj including all properties of prototypes we must: console.log(d.xx, d.yy)
 
-// let b=100  // let can be replaced with var for legal shadowind of b
-// {
-//      var a = 10
-//      let b = 20   //  let can't be replaced with var for legal  shadowing OTHER THAN if b was enclosed within a function 
-//      const c=30
-//      console.log(a);
-//      console.log(b);
-//      console.log(c);
+/// *********** EX2  - TEST ITERATION
+// for...of could be used because array is iterable
+
+// let a1 = [11, 22, 33]
+// for (val of a1) {
+//     console.log(val)
+// }  
+// // all function call arguments are stored in property 'arguments' 
+// let it = a1[Symbol.iterator].call(a1) // implementing context of 'a1' inside function 'Symbol.iterator' from an array object 
+// let result = it.next();
+// while (!result.done){
+//     console.log(result.value);
+//     result = it.next();
+// }
+//********************************************************************
+// function foo(...args){
+//     let argums = Array.from(arguments)
+//     console.log(typeof argums) // -> 'object' (since array is an object) // console.log(argums) will print the array !
+//     for (let arg of argums){
+//         console.log(arg)
+//     }
+// }
+// foo([1,2],[3,4],5,6,7,8,[9,10,11])
+
+//------------------------------------- EX-1 
+// create function getRandomNumber (min,max) where min - minimal value, max - max value
+//Example getRandomNumber(0, 1) -> returns number that is either 0 or 1
+//if min > max then swap the values swap should be without additional variable in one line code
+
+//  function getRandomNumber(min, max){
+//      if (min > max){
+//          [max, min] = [min, max]
+//      }
+//     return Math.round(min + Math.random()*(max - min))
 //  }
-//  console.log(a)
-//  console.log(b);
-// //  console.log(c); //--> ref error - c is not defined
+// for (let i=0; i<10; i++) console.log(getRandomNumber(100,50))
 
-    
-//  let d=10
-//  function x() {
-//      var d=100;  // LEGAL 'd' SHADOWING WITHIN  THE FUNCTION BLOCK BUT NOT JUST A BLOCK
-//      console.log(d)
-//     }
-//   x()             //--> prints 100
-//   console.log(d)  //--> prints 10
+//------------------------------------- EX-2
+// create a function concatinate(prefix) that by using the following code:
+//   const concatApp = concatinate('App - ');
+//   const concatMessage = concatApp('Test status: Done');
+//   console.log(concatMessage); 
+//   will print -> "App - Test status: Done" 
 
-/////////////********** Namaste#15 ******** FIRST CLASS FUNCTIONS-anonymous functions  \\\\\\\\\\\\\\\\\\
-// // a();
-// // b();   //  --> "ReferenceError: Cannot access 'b' before initialization"
-// //the difference is the hoisting, b() will throw an error "ReferenceError: Cannot access 'b' before initialization"-as for the variable
-// //  FUNCTION STATEMENT  === FUNCTION DECLARATION
-// function a(){
-//     console.log("a called")
+// function concatenate(prefix){
+// return (...args)=> [prefix,...args].join('') // join - to  concatenate all array's element into string. 
 // }
-  
-// // FUNCTION EXPRESSION
-// var b = function(){
-//     console.log("b called")
-// }
-// a();
-// b();
-// // ANONYMOUS FUNCTIONS  --> used as a value
-// // function (){   // --> SyntaxError: Function statements require a function name
+// const concatApp  = concatenate('App - ');
+// const concatMessage = concatApp('Test satus: Done', ' good', ' very')
+// console.log(concatMessage) 
 
-// // }
-
-// NAMED FUNCTION EXPRESSION
-// var c = function xyz(){
-//     console.log(xyz)
-// }
-// xyz() // --> ReferenceError: xyz is not defined 
-
-// // DIFFERENCE BETWEEN PARAMETERS AND ARGUMENTS
-// // FIRST CLASS FUNCTION === FIRST CLASS CITIZENS  -- > ability to  use function as an argument 
-// var fun = function (param1){
-//     console.log(param1)    
-// }
-// fun(a);
-// fun(function(){})
+// 02:25 countdown
 
 
-/////////////********** Namaste#16 ******** Callback Functions in JS ft. Event Listeners   \\\\\\\\\\\\\\\\\\
-
-// CALLBACK FUNCIONS
-
-// setTimeout(function(){
-//     console.log("timer")
-// }, 5000);
-// function x(y){
-//     console.log("x")
-//     y()
-// }
-// x(function y(){console.log("y")}) 
-
-// JS AS A SYNCHRONOUS SINGLE THREATED LANGUAGE
-// EVENT LISTENERS
-// CLOSURE DEME WITH EVENT LISTENER
-// SCOPE DEMO WITH EVENT LISTENER
-// GARBAGE COLLECTOR & removeEventListeners
 
 
-// let a=5
-// function fun2(){
-//     let a=10;
-//     function fun1(){
-//         var a=100
-//         console.log(a)
-//     }
-//    console.log(a)
-//    fun1()  
-// }
-// fun2()
-// console.log(a)
-
-/////////////********** Namaste#20 ******** HIGHER-ORDER FUNCTIONS, FUNCTIONAL PROGRAMMING   \\\\\\\\\\\\\\\\\\
-
-// const radius = [3, 1, 2, 4];
-// const area = function(radius){
-//     return Math.PI*radius*radius
-// }
-// const circumference = function(radius){
-//     return 2*Math.PI*radius
-// }
-// const diameter =  function (radius){
-//     return 2*radius
-// }
-
-// // const calculate = function(radius, logic){
-// //     const output = []
-// //     for (let i = 0; i < radius.length; i++){
-// //         output.push(logic(radius[i]))
-// //     }
-// //     return output
-// // }
-
-// //TO REPLACE 'MAP' WITH 'CALCULATE' : 
-
-// Array.prototype.calculate = function(logic){
-//     const output = []
-//     for (let i = 0; i < this.length; i++){  // ths === radius as the calculate function called form 'radius' object
-//         output.push(logic(this[i]))
-//     }
-//     return output
-// }
-// console.log(radius.calculate(area))
-
-// // console.log(calculate(radius, area))
-// // console.log(calculate(radius,circumference))
-// // console.log(calculate(radius,diameter))
-
-// // console.log(radius.map(area))                   // can  be replaced with map   
-// // console.log(radius.map(circumference))
-// // console.log(radius.map(diameter))
-
-/////////////********** Namaste#21 ******** MAP, FILTER, REDUCE   \\\\\\\\\\\\\\\\\\
-
-const arr = [5, 1, 3, 2, 6]
-// console.log(arr.map(x => x*2))         
-// console.log(arr.map(x => x.toString(2)))  // return  binary rep af an array
-
-//---------------------- filter even/odd values
-// function odd(x) {
-//     return x%2
-// }
-// function even(x){
-//     return x%2===0
-// }
-// var output = arr.filter((x) => x%2==1)  // any  expression which  gives true will  form another array
-// console.log(output)
-// var output = arr.filter(x => x%2===0)
-// console.log(output)
-
-//---------------------- reduce method
-// finding the summary of an array
-// var output = arr.reduce((acc, curr) => acc = acc+curr, 0)    // 0 - iniial value of acc
-// console.log(output)
-
-// // finding the max value of an array
-// var  output = arr.reduce((max,curr) => curr>max ? max = curr: max ,max = arr[0])  //// ???? why this[0] and curr[0]  NG ???
-// console.log(output)
-
-// // EX: from the given array of the users   1) create an array of first+lasat name 
-//                                            2) create an array of the number of occurance for each age
-//                                            3) firstName of users who is less than 30
-
-const users = [
-    {firstName: 'Alex',   lastName: 'Blits', age: 45},
-    {firstName: 'Donald', lastName: 'Trump', age: 28},
-    {firstName: 'Elon',   lastName: 'Musk',  age: 29},
-    {firstName: 'Kuku',   lastName: 'Reku',  age: 45}
-]
-// Task 1
-const output1 = users.map( x => x.firstName+' '+x.lastName)
-console.log(output1)
-// Task 2
-const output2 = users.reduce((acc,curr) => {
-    acc[curr.age] ? ++acc[curr.age] : acc[curr.age]=1 
-     return acc
-}, {} )
-console.log(output2)
-// Task 3 
-const output3 = users.filter( curr => curr.age<30 ).map( curr => curr.firstName)
-console.log(output3)
-// Task 3 -  by  using reduce
-const output4 = users.reduce((acc, curr) =>{
-    if (curr.age<30) acc.push(curr.firstName)
-    return acc
-}, [])
-console.log(output4)
 
 
