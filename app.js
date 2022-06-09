@@ -12,41 +12,41 @@
 // console.log(`+"12" + 12 = ${+"12" + 12}`) //  -> 24 
 // console.log(`"12" + 12 = ${"12" + 12}`) //  -> 1212 
 // /// **********    
-// function stringProcessing(str){
-//     const strP=""+str;
-//     console.log(`${strP}[4] is ${strP[4]}`);
-//     console.log(`lenght of ${strP} is ${strP.length}`);
-//     console.log(`${str} includes "sha" is ${strP.includes("sha")}`);
-//     console.log(`substring of ${strP} beginning from index 2 to index 5 is ${strP.substring(2,5)}`);
-//     console.log(`index of letter "a" is ${strP.indexOf("a")} ; last index of letter "a" is ${strP.lastIndexOf("a")}`)
+function stringProcessing(str){
+    const strP=""+str;  // strP created to make VS Code be able to auto complete
+    console.log(`${strP}[4] is ${strP[4]}`);
+    console.log(`lenght of ${strP} is ${strP.length}`);
+    console.log(`${str} includes "sha" is ${strP.includes("sha")}`);
+    console.log(`substring of ${strP} beginning from index 2 to index 5 is ${strP.substring(2,5)}`);
+    console.log(`index of letter "a" is ${strP.indexOf("a")} ; last index of letter "a" is ${strP.lastIndexOf("a")}`)
 
-// } stringProcessing("Sashaaa");
+} stringProcessing("Sashaaa");
 
 
 ////////////////     HOMEWORK 11  - STRINGS  \\\\\\\\\\
 
-function encode(num, baseString){
+// function encode(num, baseString){
   
-    let wrongFlag = false;
-        for(let i=0; i<baseString.length; i++){
-            if( i !== baseString.lastIndexOf(baseString[i])){
-                wrongFlag = true;
-                console.log(`basestring has repeaed sign ${baseString[i]}`)
-            }
-        }
-    if (! wrongFlag){
-            let res = "";
-            do {
-                const digit = num % baseString.length;
-                const symb = baseString[digit];
-                res = symb + res; 
-                num = Math.trunc(num / baseString.length); 
-            } while(num >= 1);
-        return res;
-    }    
-}
+//     let wrongFlag = false;
+//         for(let i=0; i<baseString.length; i++){
+//             if( i !== baseString.lastIndexOf(baseString[i])){
+//                 wrongFlag = true;
+//                 console.log(`basestring has repeaed sign ${baseString[i]}`)
+//             }
+//         }
+//     if (! wrongFlag){
+//             let res = "";
+//             do {
+//                 const digit = num % baseString.length;
+//                 const symb = baseString[digit];
+//                 res = symb + res; 
+//                 num = Math.trunc(num / baseString.length); 
+//             } while(num >= 1);
+//         return res;
+//     }    
+// }
 
-console.log(encode(10,'01'));
+// console.log(encode(10,'01'));
 
 
 // write function --->>>   function encode (num, codingString)
