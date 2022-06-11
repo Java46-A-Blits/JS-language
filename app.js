@@ -68,18 +68,12 @@ displayMatrix(matrix2);
         // result matrix [[1, 3, 5], [2, 4, 6]]
 //}
 
-/************************************HW# 12 Solution task 1*/
+//************************************HW# 12 Solution task 1*/  ( FIXED )
 const arHw = [13, 28, 4, 15, 25, -10, 40, 17,27];
 //expected [-10, 4, 28, 40, 27, 25, 17, 15, 13] - even ascending, odd  descending
-const comparator = (n1, n2) => {
-        let res = n1 % 2 - n2 % 2;
-        if (res == 0) {
-                res = n1 % 2 == 0 ? n1 - n2 : n2 - n1; 
-        }
-        return res;
-}
-arHw.sort(comparator);
-console.log(arHw);
+// const arHw = [13, -28, -15, -11, 12, -45, 35, 15, 22];
+const comparator = (a,b) => {return (a%2==0 ? (b%2==0 ? a-b : -1) : (b%2==0 ? 1 : b-a)) }  // '-1' and '1' brings odd to the left and even to the right
+console.log(arHw.sort(comparator));
 /******************************************************HW #12 solution task2 */
 function matrixTransp(matrix) {
         const res = [];
