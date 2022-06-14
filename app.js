@@ -8,6 +8,7 @@
 //     str+= n+'#';
 // })
 // str = str.substring(0, str.length-1);
+// console.log(str);
 
 // -----  SOLUTION BASED ON forEach FROM SECOND NUMBER  ----- \\\
 
@@ -24,7 +25,7 @@
 // *******  mapper : 
 
 // const ar2 = ar.map(n => n*2);
-// console.log(ar2)
+// console.log('mapped ar2', ar2)
 
 /// *************   HW 13 task1   -  write function myForEach(array, callback-function),  where: 
 // array is iterated
@@ -47,7 +48,7 @@
 //         callback2(array[i], i, array);
 //     }
 // }
-// function myMap(array, callback1){
+// function myMap(array,callback1){
 //  const res = [];
 //     function forEachCall(n,i,a){
 //         res.push(callback1(n,i,a))
@@ -55,15 +56,16 @@
 //     myForEach(array, forEachCall);
 //  return res;        
 // }
-// // myForEach(ar, mapper);
+
 // const ar1 = myMap(ar, mapper);
-// console.log(ar1);
+// console.log('After mapper: ',ar1); 
+
 // const ar2 = myMap(ar, mapper1);
-// console.log(ar2);
+// console.log('After mapper1: ',ar2);
 
 // ******************   CW-14     ***********************\\
 
-const ar20 = [13, 17, 20, 23, 25];
+const ar20 = [13, 17, 20, 23, 25]; // if num of elements even - print only even elements, if not print only odd elements. 
 // const arEven = ar20.filter((n, i, a)=> a.length % 2 == 0 ? n % 2 ==0 : n % 2 == 1 );
 // console.log(arEven);
 
@@ -75,15 +77,15 @@ const ar20 = [13, 17, 20, 23, 25];
 //callback - function with three possible parameters: current element, current index, reference to array
 /********************************************************************* */
  
-const res = ar20.reduce((res,cur) => res + cur ,0); // ( res != res) , res accumulates the sum of an array
-console.log(res)
-
-const max = ar20.reduce((max, cur) => cur > max ? cur: 0 );
+// const res = ar20.reduce((res,cur) => res + cur ,0); // ( res != res) , res accumulates the sum of an array
+// console.log(res)
+let max = ar20[0];
+max = ar20.reduce((max, cur) => cur > max ? cur : max );
 console.log(max)
 
 /******************************************HW 14 definition task2 */
 //write myReduce(array, callback, initialResult) based on myForEach
 //callback - function with three possible parameters: current element, current index, reference to array
-// if the user call doesn't contain a second argument, then the first elemnt of the array will be
+// if the user call doesn't contain a second argument, then the first element of the array will be
 //considered as initial result (in this case iterating begins from the second element of the array)
 
