@@ -79,8 +79,8 @@ const ar20 = [13, 17, 20, 23, 25]; // if num of elements even - print only even 
  
 // const res = ar20.reduce((res,cur) => res + cur ,0); // ( res != res) , res accumulates the sum of an array
 // console.log(res)
-let max = ar20[0];
-max = ar20.reduce((max, cur) => cur > max ? cur : max );
+
+max = ar20.reduce((max, cur) => cur > max ? cur : max, ar20[0] );
 console.log(max)
 
 /******************************************HW 14 definition task2 */
