@@ -66,44 +66,48 @@
 //         callback(array[i], i, array);
 //     }
 //  }
-// // function myFilter (array, predicateCB){
-// //     const res =[];
+// function myFilter (array, predicateCB){
+//     const res =[];
 // //     function forEachCB(n,i,a){
 // //         if (predicateCB(n,i,a)) {
 // //             res.push(n);
 // //         }    
 // //     }
-// //     myForEach(array, forEachCB);
-// //     return res;
-// // }
+//     myForEach(array, (n,i,a)=> predicateCB(n,i,a) && res.push(n));
+//     return res;
+// }
 // const ar20 = [13, 17, 20, 23, 40, 55, 11]
-// // const arEvenOdd = myFilter(ar20, (n,i,a) => a.length%2 == 0? n%2 == 0 : n%2 == 1)
-// // console.log(arEvenOdd)
+// const arEvenOdd = myFilter(ar20, (n,i,a) => a.length%2 == 0? n%2 == 0 : n%2 == 1)
+// console.log(arEvenOdd)
 
 ///////////////////////////////////////// --- TASK 2 --- \\\\\\\\\\\\\\\\\\\\\\\\\\
-
-// function myReduce (array, cbReduce, initial){
-//     if (initial == undefined){
-//         initial = array[0];
-//         array = array.slice(1);
+// function myForEach (array,  callback){
+//     for( let i=0; i<array.length; i++){
+//         callback(array[i], i, array);
 //     }
-//         let res = initial; 
+//  }
+// function myReduce (array, cbReduce){
+//     let initial = array[0];
+//         array = array.slice(1);
+    
+//     let res = initial; 
 //     //    function forEachCB(n,i,a){
 //     //          res = cbReduce(res,n,i,a) // dissregarded 'i' and 'a' if not used in the cb function. 
 //     //          }
 //     //    myForEach(array, forEachCB);
 //     //  replaced with:
-//          myForEach(array, (n,i,a) => res = cbReduce(res,n));
+//          myForEach(array, (n,i,a) => res = cbReduce(res,n)); // as 'i' and 'a' not used they can be removed from (n,i,a)
 //     return res;
 // }
-// let res = myReduce(ar20, (res,cur) => res+cur)
+// const ar20 = [13, 17, 20, 23, 40, 55, 11]
+// let res = myReduce(ar20, (res,cur) => res+cur) /// <<---------------
 // console.log(res)
 
 ///////////////////////////// TASK --- 3 ---  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-// // ////  ***** Factory method to 
+// ////  ***** Factory method to 
 function createAddress(city, street){
-    return{city: city, street: street} // <=> {city, street}
+    return{city: city, street: street} // <=> the same as {city, street}
 }
 function createPerson(id, name, address){
     return {id, name, address}
@@ -115,15 +119,15 @@ const persons = [
     createPerson(126, "Sara", createAddress('Lod', 'Sokolov'))
 ]
 
-function getPersonCity (persons, city){
-    return persons.filter( p => p.address.city === city);
+function getPersonOfCity (persons, city){
+    return persons.filter( (p)=> p.address.city === city);// the same as- return persons.filter( function cb(p) {return p.address.city === city});
 }
-// console.log(getPersonCity(persons, 'Rehovot'));
+// console.log(getPersonOfCity(persons, 'Rehovot'));
 
 // /// ----- TASK 4 ----- \\\
 
-// function movePersonsNoCityAtBeginning(persons, city){
-//     const personsRes  = getPersonCity (persons, city);
+// function movePersonsNoCityAtBeginning  (persons, city){
+//     const personsRes  = getPersonOfCity (persons, city);
 //     personsRes.unshift(...persons.filter( p => p.address.city !== city));
 //     return personsRes;
 // }
@@ -137,26 +141,35 @@ function getPersonCity (persons, city){
 
 // let per = persons.filter(p=> p.address.city === "Rehovot").reduce((rv, p) => rv.id>p.id ? rv: p, {}).name
 // console.log(per);
-// where rv - return value start @ the 1'st person 
+// where rv - return value start @ the empty object, then 1'st person etc.
 
 //=======================================
 // 2*) Build IN ONE LINE OF CODE the statistics of persons amount per city. 
 //     The expected result is object: {Rehovot:2, 'Tel-Aviv':1,Lod:1}
 
 // let peoplePerCity = persons.map( n => n.address.city).reduce
-// ( (newarr,city) => (newarr[city] = (newarr[city]||0) + 1, newarr),{});
+// ( (newarr,city,) => (newarr[city] = (newarr[city]||0) + 1, newarr ),{}); // ????? what ',newarr' inside a function does?.. is it only for arrays?<<<<
+// // ANS: an operator ',' (in arrow function) will  return the value after it,  i.e 'newarr'.... ex 2+2, 888 will  return 888
+// //can be replaced with : '( (newarr,city,) => {newarr[city] = (newarr[city]||0) + 1; return newarr},{})'
 // console.log(peoplePerCity)
 
 
 /// **************************-----   cw15     -----***************************** \\\
 
-//obj = {a: 123, d: "abc"} ; const a = "d" ; obj.a = 123; obj[a] === "abc"
-// obj.c = 10 wil  create field c -> {a: 123, d: "abc", c:10}
+// //obj = {a: 123, d: "abc"} ; const a = "d" ; obj.a = 123; obj[a] === "abc"
+// obj={a:213, d:"abc"}
+// const a = 'd' ;
+// obj.a = 123;         // refers to the 'a' inside the object.
+// console.log(obj) // ->  { a: 123, d: 'abc' }
+// obj.d = "abcd"
+// console.log(obj) // -> { a: 123, d: 'abcd' }
+// console.log(obj[a]) // -> "abcd" - ('a' created out of the object)
+// // obj.c = 10 wil  create field c -> {a: 123, d: "abc", c:10}
 
 // ex: Input : ["lmn", "d", "d", "lmn", "a", "lmn", "a", "bc"]
 // output :  lmn -> 3
 //           a -> 2 
-//           b -> 2
+//           d -> 2
 //           bc-> 1
 
 // function displayOccurences(array){
@@ -169,10 +182,10 @@ function getPersonCity (persons, city){
 //         res[array[i]] = res[array[i]]+1;
 //     }
 // }
-// /// console.log(res);   intermediate check 
+//  console.log(res);  // intermediate check 
 // Object.entries(res).sort((e1, e2) =>{ 
-//     const comp = (e2[1]-e1[1]); 
-//     return comp !== 0 ? comp : e1[0].localeCompare(e2[0]) ; // optional (TBD)
+//     const comp = (e2[1]-e1[1]);  // -> descendinng order of numbers
+//     return comp !== 0 ? comp : e1[0].localeCompare(e2[0]) ; // optional (TBD)- if the same number of occuranses exist then sort letters in acc. order
 //     }).forEach( e => console.log(`${e[0]} -->> ${e[1]}`))
 // }
 
@@ -205,18 +218,55 @@ function getPersonCity (persons, city){
 
 
 
-function getStatObject(arr){
-         return arr.reduce((res,cur) => {res[cur] = res[cur]===undefined? 1: res[cur]+1;
-                                      return res;
-                                    },{})
-}
-function countBy(array, callbackFn){
-    array = array.map(callbackFn);
-    return getStatObject(array)
+// function getStatObject(arr){
+//          return arr.reduce((res,cur) => {res[cur] = res[cur]===undefined? 1: res[cur]+1;
+//                                       return res},{})
+// }
+// function countBy(array, callbackFn){
+//     array = array.map(callbackFn);
+//     return getStatObject(array)
+// }
+ 
+// let arr1 = [6.4, 5.6, 5.9, 7.15, 7.2]
+// let res = countBy(arr1, element => Math.floor(element));
+// console.log(res);
+
+// Write a functinon groupBy(array, .......), which has 
+// some callback parameters and performs the following actions
+// 1) breaks the array elements into groups by specified criteria
+// 2) for each group performs specified reduction operation
+// The same function would be able to show the following information 
+// when called with different callback parameters:
+// Example 1: { Rehovot: 2, 'Tel-Aviv': 1, Lod: 1 }
+// Example 2: { 
+//    Rehovot: [ 'Vasya', 'Olya' ],
+//    'Tel-Aviv': [ 'Tolya' ],
+//    Lod: [ 'Sara' ]
+// }
+//
+// Your tasks are:
+// - Decide which parameters must have such function
+// - Implement the function
+// - Implement the calls of this function implementing results of Example 1 and Example 2
+// ------------------------------------
+
+function groupBy(array, keyExtractor, groupInitializer, groupReducer){
+    return array.reduce(
+        (rv, n)=> {
+            let key = keyExtractor(n);
+            rv[key] = groupReducer(rv[key]||groupInitializer(), n);
+            //instead of: 
+            // if (rv[key] === undefined) {
+            //     rv[key] = groupIntializer();
+            // } 
+            // rv[key]=groupReducer(rv[key], n);
+            return rv
+        },{}
+    )
 }
 
-let arr1 = [6.4, 5.6, 5.9, 7.15, 7.2]
-let res = countBy(arr1, element => Math.floor(element));
-console.log(res);
+let r = groupBy(persons, p=>p.address.city, () => 0, (rv, p) => ++rv);
+console.log(r)
+r = groupBy(persons, p=>p.address.city, ()=> [], (rv, p)=> (rv.push(p.name), rv) )
+console.log(r)
 
-// >>> ???????????
