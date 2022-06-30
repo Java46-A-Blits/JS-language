@@ -1,24 +1,31 @@
+
+radius = 1; 
 const circle = {radius: 20, square: function(){return 3.14*(this.radius**2)},
                 perimeter: () => 2*3.14*this.radius,
-                toString: function(){return `radius of this circle is ${this.radius}` 
+                toString: function () {return `radius of this circle is ${this.radius}` 
                 }  /*to avoid [object Object] line 16 polymorphism)   ___|*/ 
 
             }   
-// console.log(`area = ${circle.square()}, perimeter = ${circle.perimeter()}`);
+// console.log(`area = ${circle.square()}, perimeter = `, circle.perimeter());
 
-//circle.square() will  be converted to square(circle) 
-//for the perimeter it will  show as NaN as this.radius ->
-// undefined -> 2*3.14*undefined = NaN ('this.radius'  for 'perimeter' defined within a scope of 'circlle' object only )
+// circle.square() will  be converted to square(circle), they are the same
+// for the perimeter it will  show as NaN as in the arrow function this.radius ->
+// undefined within the scope of  the 'circle' object-> 2*3.14*undefined = NaN
+// ('this.radius'  for 'perimeter' defined within a scope of 'circlle' object only, so  if we define radius in 
+// the window (main)and replace 'this.radius' with 'radius' (line 4) then it was printed)
 // it's invisible when we call it from the window object,  this is why  it won't print.  
 function square(circle) { // function ,  not  a method
     return 3.14*(circle.radius**2);
 } 
-// console.log(`circle :${circle}`); // --> circle: radius of this circle is 20
+// console.log(`circle :${circle}`); // --> circle: radius of this circle is 20 - it will find the toString in 'circle' and print it.
 
-const circle1 = {radius:20, perimeter: function () {return 2*3.14*this.radius},
+const circle1 = {radius:10, perimeter: function () {return 2*3.14*this.radius},
                 toString: function(){ return `radius of this circle is ${this.radius}`}
                 }   
-// circle1.square(); /// will give an eror -> the method square is not defined inside obj circle1
+// circle1.square(); /// will give an eror -> the method square is not defined inside obj circle1, to  resolve it:
+// console.log(circle.square.call(circle1)) // the call method, dynamically transfers 'this', when 'bind' permanently transfers 'this' 
+// of the to the object 'circle1' to the object 'circle'
+
 function Circle(radius){
     this.radius = radius; 
 }
@@ -27,25 +34,27 @@ Circle.prototype.square = function() {
 }
 Circle.prototype.perimeter = function(){
     return 2*3.14*this.radius  
+    Circle.prototype.toString  = function(){
+        return `radius of this circle is ${this.radius}`
+    }
+    
+    const circle10  = new Circle(10);  // <<=============================================================================
+    console.log()
+    ////////////////////////**********    HW-16   ************* \\\\\\\\\\\\\\\
+    //Write constructor Deferred
+    //         const d = new Deferred()
+    // d.then(function(res){ console.log('1 ', res); return 'a'; });
+    
 }
-Circle.prototype.toString  = function(){
-    return `radius of this circle is ${this.radius}`
-}
-const circle10  = new Circle(10);
-
-////////////////////////**********    HW-16   ************* \\\\\\\\\\\\\\\
-//Write constructor Deferred
-        //         const d = new Deferred()
-// d.then(function(res){ console.log('1 ', res); return 'a'; });
-
 // d.then(function(res){ console.log('2 ', res); return 'b'; });
 
 // d.then(function(res){ console.log('3 ', res); return 'c'; });
 // d.resolve('hello');
-//Output:   
 //1 hello
 //2 a
 //3 b
+
+//Output:   
 
 /*******************************************HW #16 definition task2 */
 //write constructor MyArray
@@ -148,12 +157,17 @@ Deferred.prototype.resolve = function(res){
     this.functions.forEach(funcN => res=funcN(res))
 }
 const d = new Deferred()
+// Task was - write methods + constructor, the only given was: 
 d.then(function(res){console.log('1',res); return 'a'});
 d.then(function(res){console.log('2',res); return 'b'});
 d.then(function(res){console.log('3',res); return 'c'});
-// d.resolve('hello');
+d.resolve('hello');
+// the output will  be: 
+// 1 hello
+// 2 a
+// 3 b
 
-/////////////////////////----- HW16-2 -----\\\\\\\\\\\\\\\\\\\\\\
+//////////////////////----- HW16-2 -----\\\\\\\\\\\\\\\\\\\\\\
 
 function myArray(initialValue){
     this.value = initialValue;
@@ -162,7 +176,7 @@ function myArray(initialValue){
 myArray.prototype.setValue = function(value){
     this.value = value;
     this.array = [];    // if not used, then after "array.setValue(300);" all values will change to 300 other than 
-                        //array[100] = 500
+                        //array[100] = 500 (???  is this wrong !??  nope !!! ))) 
 }
 myArray.prototype.set = function(index, value){
     this.array[index] = value;
@@ -173,19 +187,19 @@ myArray.prototype.get = function (index){
 }
 const array = new myArray(10);
 // console.log('array.get(100) -->',array.get(100)); // -->10
-// array.set(100, 500);
+array.set(100, 500);
 // console.log('array.get(200) -->',array.get(200)); // -->10
-// console.log('array.get(100) -->',array.get(100));
-// array.setValue(300);
-// console.log('** array.get(100) --> ',array.get(100));
-// console.log('** array.get(200) --> ',array.get(200));
-// array.set(20,0);
-// console.log('array.get(20)-->',array.get(20))
-// console.log('array.get(100) --> ',array.get(100));
+console.log('array.get(100) -->',array.get(100)); //--> 500
+array.setValue(300);
+console.log('** array.get(100) --> ',array.get(100)); //--> 300
+console.log('** array.get(200) --> ',array.get(200)); // --> 300
+array.set(20,0);
+console.log('array.get(20)-->',array.get(20)) //-->  0
+console.log('array.get(100) --> ',array.get(100));  //--> 300
 
-//****************************** */
-const arr1 =[]
-arr1[100] = 20;
-console.log('Length of array ', arr1.length)
-arr1.length = 0;  ///  the way to  reset an array
-console.log('arr1[100] is: ',arr1[100])
+//****************************** *////
+// const arr1 =[]
+// arr1[100] = 20;
+// console.log('Length of array ', arr1.length)
+// arr1.length = 0;  ///  the way to  reset an array
+// console.log('arr1[100] is: ',arr1[100])
