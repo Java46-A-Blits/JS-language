@@ -37,36 +37,42 @@
 // const funDisplayMixed = displayPointInSpace.mybind(point,50);
 // funDisplayMixed(60)
 
+
 ///////**********   Namaste#13 - CLOSURE FUNCTION PROBLEM --- 1 to 5 progression count with  delay (problem when let replaced by var, 
 // as the loop count is much faster than 'setTimeout' completed, and when 'i' is var it will  point at the same obj. value i.e '6')
 // function x(){
-//     for (let i=1; i<=5; i++){
+//     for (var i=1; i<=5;  i++){        // solution: replace  var by let for 'i'
 //         setTimeout(function(){
 //             console.log(i)
-//             }, i*1000);
+//         }, i*1000);
 //     }
 //  console.log('Test')
 // }
 // x()
 
+
+
 ////////////   closure function problem    \\\\\\\\\ ---  1 to 5 progression count with  delay (problem resolved with var
-// by  wrapping ""by the "enclose" function)
+// by  wrapping by the "enclose" function)
 
 // function x(){
-//     for (var i=1; i<=5; i++){
-
+//     for (var i=1; i<=5; i++){ 
 //         function enclose(i){
-//             setTimeout(function(){
+//              setTimeout(function () {
 //                   console.log(i)
-//                   }, i*1000);
+//             }, i*1000);
 //         }
 //         enclose(i); //  every time we call 'eclosure(i)' it will  create a new copy of 'i'
 //     }   
 //  console.log('Test')
 // }
 // x()
+
+
  
-/////////////********** Namaste#14 ******** closure sample + interview question \\\\\\\\\\\\\\\\\\
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////// Namaste#14 ///////  closure sample + interview question \\\\\\\\\\\\\\\\\\
+////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 // function outest(){
 //     let c=20;             // let instead of var, but it will still print 'c' as 'outest' forms a closure with 'inner'
@@ -83,14 +89,18 @@
 // let a=100;   // won't print 100 as the closure of 'inner' has already 'a' defined, but if it wasn't it would print 100 !!!!!!!!! 
 // outest()('Hello')();
 
-    // function outer (){
-    //     let a = 10;
-    //     function inner() {
-    //         console.log(a)
-    //     }  
-    //      return inner; // inner()
-    // }
-    // outer()() // outer()
+//     function outer (a){
+//         // let a = 10;
+//         function inner(b) {
+//             console.log(a)
+//             console.log(b)
+//         }  
+//         return inner; // inner()
+//     }
+//    const newFunction = outer('outer')
+//    newFunction('inner')                        //   the same as it was : outer('outer')('inner')
+//                                              // as this is the nested function it hs be declared this way
+
 
 // function counter(){
 //     var count = 0;
@@ -115,59 +125,86 @@
 // let b;              // have to  declare before a code  
 // console.log (b);    // --> undefined    
 
-///// --- #8 - THE SCOPE CHAIN, SCOPE & LEXICAL ENVIRONMENT     ----- \\\\\\
+//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////  #8 - THE SCOPE CHAIN, SCOPE & LEXICAL ENVIRONMENT   ////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
 // will give :
 // [Function: a]
 // undefined
 // undefined
 // 10
 
+
 // function a(){
 //     var b=10;
 //     c()
 //     function c(){
 //          console.log(b) // --> prints 10 
-
 //     }
 //     console.log(b) // --> prints 10
 // }
-// console.log(b) ; // --> undefined ? 
+// // console.log(b) ; // --> undefined 
 // a()
 
-///// --- # 10  BLOCK SCOPE & SHADOWING  ----- \\\\\\
+////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////// --- # 10  BLOCK SCOPE & SHADOWING  ----- \\\\\\
+////////////////////////////////////////////////////////////////////////////////////
 
-// let b=100  // let can be replaced with var for legal shadowind of b
+// var a = 100    //  if was 'let' -> SyntaxError: Identifier 'a' has already been declared,   but in the case of function block it would work 
+// // var a = 400 //  no error, var CAN BE REDECLARED
+// let b=200      //  let can be replaced with var for legal shadowind of b
+// // let b= 201  // --> SyntaxError: Identifier 'b' has already been declared
+// const c=300;
+// // const c=301 // --> SyntaxError: Identifier 'c' has already been declared
+// console.log(a, b, c) //-> 100, 200, 300
 // {
-//      var a = 10
-//      let b = 20   //  let can't be replaced with var for legal  shadowing OTHER THAN if b was enclosed within a function 
+//      var a = 10   // will change the value of 'a' to 10  out of the scope either, since it will point to  the same memory location
+//      let b = 20   // let can't be replaced with var for legal  shadowing OTHER THAN if b was enclosed within a function 
 //      const c=30
-//      console.log(a);
-//      console.log(b);
-//      console.log(c);
+//      console.log(a, b, c,'*'); // will  print all,  10 20 30*
+//         {
+//             console.log(a,b,c,'**' ); // will  print all,  10 20 30** ,  if variable aren't defined within a block   it will look outside
+//         }
 //  }
-//  console.log(a)
-//  console.log(b);
-// //  console.log(c); //--> ref error - c is not defined
+//  console.log(a,b,c,'***') // - > 10 200 300 ***,  even if 'a' wouldn't be defined in line 151 - no error
+//  will show as var seen out of the scope of the block 
+// //- blocks only, NOT FOR FUNCTIONS 
+// //  console.log(b); //- > 200
+// //  console.log(c); //-->if wasn't const c=300 then ref error - c is not defined  - 
+// //  let and const scope seen within a child blocks but not the parent blocks.
 
-    
-//  let d=10
-//  function x() {
-//      var d=100;  // LEGAL 'd' SHADOWING WITHIN  THE FUNCTION BLOCK BUT NOT JUST A BLOCK
-//      console.log(d)
+
+//    var d=10
+//    function x(){
+//      var d=100;  // LEGAL 'd' SHADOWING WITHIN  THE FUNCTION  only
+//      console.log(d) // --> if  wasn't var d=100 inside the function was printing 10
 //     }
-//   x()             //--> prints 100
+//     x()           //--> prints 100
 //   console.log(d)  //--> prints 10
+/*--------------------------------------------------------------------------------------------*/
+    // var d=10           // can't use let - > SyntaxError: Identifier 'd' has already been declared
+    //     {
+    //         var d=100;    // can use 'let' but then line 188 prints 10 
+    //         console.log(d) // --> 100,  if  wasn't var d=100 inside the function was printing 10
+    //     }
+    // console.log(d)  //--> prints 100
 
-/////////////********** Namaste#15 ******** FIRST CLASS FUNCTIONS-anonymous functions  \\\\\\\\\\\\\\\\\\
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////// NAMASTE#16 (Ep.13) /////// FIRST CLASS FUNCTIONS  ft ANONYMOUS FUNCTIONS /////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
 // // a();
-// // b();   //  --> "ReferenceError: Cannot access 'b' before initialization"
-// //the difference is the hoisting, b() will throw an error "ReferenceError: Cannot access 'b' before initialization"-as for the variable
-// //  FUNCTION STATEMENT  === FUNCTION DECLARATION
+// // b();   //  -> TypeError: b is not a function
+// //the difference is the hoisting, b() will throw an error "-> TypeError: b is not a function"-as if it was a variable
+// //  FUNCTION STATEMENT  === FUNCTION DECLARATION:
 // function a(){
 //     console.log("a called")
 // }
   
-// // FUNCTION EXPRESSION
+// // FUNCTION EXPRESSION:
 // var b = function(){
 //     console.log("b called")
 // }
@@ -182,14 +219,15 @@
 // var c = function xyz(){
 //     console.log(xyz)
 // }
-// xyz() // --> ReferenceError: xyz is not defined 
+// xyz() // --> ReferenceError: xyz is not defined (not in the scope of the global)
 
-// // DIFFERENCE BETWEEN PARAMETERS AND ARGUMENTS
-// // FIRST CLASS FUNCTION === FIRST CLASS CITIZENS  -- > ability to  use function as an argument 
+//// first class function (aka 'first class citizens') - the ability of the function to be transfered to another function as an argument
+//// (to be used as an argument (or to be assigned to values)) 
+
 // var fun = function (param1){
 //     console.log(param1)    
 // }
-// fun(a);
+// // fun(a);
 // fun(function(){})
 
 
@@ -208,7 +246,7 @@
 
 // JS AS A SYNCHRONOUS SINGLE THREATED LANGUAGE
 // EVENT LISTENERS
-// CLOSURE DEME WITH EVENT LISTENER
+// CLOSURE DEMO WITH EVENT LISTENER
 // SCOPE DEMO WITH EVENT LISTENER
 // GARBAGE COLLECTOR & removeEventListeners
 
@@ -221,7 +259,7 @@
 //         console.log(a)
 //     }
 //    console.log(a)
-//    fun1()  
+//    fun1()   
 // }
 // fun2()
 // console.log(a)
@@ -247,7 +285,7 @@
 // //     return output
 // // }
 
-// //TO REPLACE 'MAP' WITH 'CALCULATE' : 
+// // TO REPLACE 'MAP' WITH 'CALCULATE' : 
 
 // Array.prototype.calculate = function(logic){
 //     const output = []
@@ -256,17 +294,23 @@
 //     }
 //     return output
 // }
-// console.log(radius.calculate(area))
 
-// // console.log(calculate(radius, area))
+
+
+// // console.log(calculate(radius, area  ))
 // // console.log(calculate(radius,circumference))
 // // console.log(calculate(radius,diameter))
 
 // // console.log(radius.map(area))                   // can  be replaced with map   
 // // console.log(radius.map(circumference))
 // // console.log(radius.map(diameter))
+//                                                    // for use with creaeted 'calculate' method as an Array prototype
 
-/////////////********** Namaste#21 ******** MAP, FILTER, REDUCE   \\\\\\\\\\\\\\\\\\
+// console.log(radius.calculate(area));
+// console.log(radius.calculate(circumference));
+// console.log(radius.calculate(diameter));
+
+///////////********** Namaste#21 ******** MAP, FILTER, REDUCE   \\\\\\\\\\\\\\\\\\
 
 const arr = [5, 1, 3, 2, 6]
 // console.log(arr.map(x => x*2))         
@@ -297,29 +341,29 @@ const arr = [5, 1, 3, 2, 6]
 //                                            2) create an array of the number of occurance for each age
 //                                            3) firstName of users who is less than 30
 
-const users = [
-    {firstName: 'Alex',   lastName: 'Blits', age: 45},
-    {firstName: 'Donald', lastName: 'Trump', age: 28},
-    {firstName: 'Elon',   lastName: 'Musk',  age: 29},
-    {firstName: 'Kuku',   lastName: 'Reku',  age: 45}
-]
-// Task 1
-const output1 = users.map( x => x.firstName+' '+x.lastName)
-console.log(output1)
-// Task 2
-const output2 = users.reduce((acc,curr) => {
-    acc[curr.age] ? ++acc[curr.age] : acc[curr.age]=1 
-     return acc
-}, {} )
-console.log(output2)
-// Task 3 
-const output3 = users.filter( curr => curr.age<30 ).map( curr => curr.firstName)
-console.log(output3)
-// Task 3 -  by  using reduce
-const output4 = users.reduce((acc, curr) =>{
-    if (curr.age<30) acc.push(curr.firstName)
-    return acc
-}, [])
-console.log(output4)
+// const users = [
+//     {firstName: 'Alex',   lastName: 'Blits', age: 45},
+//     {firstName: 'Donald', lastName: 'Trump', age: 28},
+//     {firstName: 'Elon',   lastName: 'Musk',  age: 29},
+//     {firstName: 'Kuku',   lastName: 'Reku',  age: 45}
+// ]
+// // Task 1
+// const output1 = users.map( x => x.firstName+' '+x.lastName)
+// console.log(output1)
+// // Task 2
+// const output2 = users.reduce((acc,curr) => {
+//     acc[curr.age] ? ++acc[curr.age] : acc[curr.age]=1 
+//      return acc
+// }, {} )
+// console.log(output2)
+// // Task 3 
+// const output3 = users.filter( curr => curr.age<30 ).map( curr => curr.firstName)
+// console.log(output3)
+// // Task 3 -  by  using reduce
+// const output4 = users.reduce((acc, curr) =>{
+//     if (curr.age<30) acc.push(curr.firstName)
+//     return acc
+// }, [])
+// console.log(output4)
 
 
