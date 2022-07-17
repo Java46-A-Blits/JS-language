@@ -1,41 +1,49 @@
-// const point = {
-//     x:3,
-//     y:4
-// };
-// function displayPointInSpace(z, t){
-//     console.log(`x: ${this.x}, y: ${this.y}, z:${z}, t:${t}`)
-// }
-// // displayPointInSpace(10,20) // --> x: undefined, y: undefined, z:10, t:20
-// // point.method = displayPointInSpace;
-// // point.method(10,20)             // -->x: 3, y: 4, z:10, t:20
-// // displayPointInSpace.call(point, 10, 20);
-// // displayPointInSpace.mybind(point, 10,20)();   // must () to  call  a function and IT RETURNS A FUNCTIONAL OBJECT
-// // displayPointInSpace.apply(point, [10,20]);
+const point = {
+    x:3,
+    y:4
+};
+function displayPointInSpace(z, t){
+    console.log(`x: ${this.x}, y: ${this.y}, z:${z}, t:${t}`)
+}
+// displayPointInSpace(10,20) // --> x: undefined, y: undefined, z:10, t:20
+// point.method = displayPointInSpace;
+// point.method(10,20)             // -->x: 3, y: 4, z:10, t:20
+// displayPointInSpace.call(point, 10, 20);// --> x: 3, y: 4, z:10, t:20
+// displayPointInSpace.mybind(point, 10,20)();   // must () to  call  a function and IT RETURNS A FUNCTIONAL OBJECT
+// displayPointInSpace.apply(point, [10,20]);
 
-// Function.prototype.mybind = function(thisObj, ...args){
-//     //  this - reference to  any  functional object ( as 'displayPointInSpace')
-//     console.log('inside mybind')
-//     // thisObj - refence to  any object (as a 'point')
-//     return (...params)=>{
-//         thisObj.method12345 = this;
-//         const res = thisObj.method12345(...args.concat(params)); // 'params' are for the 'funDisplay' or 'funDisplayArguments' or
-//                                                                  // 'funDisplayMixed' following functions
-//         //thisObj.method12345(...args.concat(params)); // works even if you don't assign & return 'res'
-//         delete thisObj.method12345;
-//         return res; /// ???????
-//     }
-// }
-// // //////////////////-----    ARGUMENTS PASSED AT THE FUNCTION CALL   -----\\\\\\\\\\\\\ (TYPICAL SAMPLE OF FUNCTION INSIDE THE FUNCTION )
-// const funDisplay = displayPointInSpace.mybind(point)   
-// funDisplay(10,20)       // -->x: 3, y: 4, z:10, t:20 (function call) :  !!! FUNCTION INSIDE THE FUNCTION
+Function.prototype.mybind = function(Obj, ...args){
+    //  this - reference to  any  functional object ( as 'displayPointInSpace')
+    console.log('inside mybind')
+    // Obj - refence to  any object (as a 'point')  
+        return (...params)=>{
+        Obj.method12345 = this; // merge this of 'displayPointInSpace' (to the left) and this of the 'point'  Obj
+        // const res = this(...args.concat(params)) will print: x: undefined, y: undefined, z:10, t:20 since this of the 
+        // point is global and the local this we are now in is 'displayPointInSpace' since mybind method was called from 
+        // 'displayPointInSpace'  (observe compiler) 
+        /////////////////////////////////////////////////////////////////////
+        ///  - The version from the webinare with 'call' method will work too:
+        //   return this.call(Obj, ...args.concat(params));    
+        const res = Obj.method12345(...args.concat(params)); // 'params' are for the 'funDisplay' or 'funDisplayArguments' or
+                                                                 // 'funDisplayMixed' following functions
+        //thisObj.method12345(...args.concat(params)); // works even if you don't assign & return 'res' (console.log)
+        delete Obj.method12345;
+        return res; /// ???????
+    }
+}
+// //////////////////-----    ARGUMENTS PASSED AT THE FUNCTION CALL   -----\\\\\\\\\\\\\ (TYPICAL SAMPLE OF FUNCTION INSIDE THE FUNCTION )
+const funDisplay = displayPointInSpace.mybind(point)   
+funDisplay(10,20)       // -->x: 3, y: 4, z:10, t:20 (function call) :  !!! FUNCTION INSIDE THE FUNCTION
+// the same as :
+// const funDisplay = displayPointInSpace.mybind(point)(10,20);   
 
-// // //////////////////-----    ARGUMENTS BOUND BY  THE METHOD 'mybind'   -----\\\\\\\\\\\\\
-// const funDisplayArguments = displayPointInSpace.mybind(point, 30,40)
-// funDisplayArguments()
+// //////////////////-----    ARGUMENTS BOUND BY  THE METHOD 'mybind'   -----\\\\\\\\\\\\\
+const funDisplayArguments = displayPointInSpace.mybind(point, 30,40)
+funDisplayArguments()
 
-// // //////////////////-----    MIXED -  PART OF ARGUMETS BOUND AND PART BY THE FUNCTION CALL   -----\\\\\\\\\\\\\
-// const funDisplayMixed = displayPointInSpace.mybind(point,50);
-// funDisplayMixed(60)
+// //////////////////-----    MIXED -  PART OF ARGUMETS BOUND AND PART BY THE FUNCTION CALL   -----\\\\\\\\\\\\\
+const funDisplayMixed = displayPointInSpace.mybind(point,50);
+funDisplayMixed(60)
 
 
 ///////**********   Namaste#13 - CLOSURE FUNCTION PROBLEM --- 1 to 5 progression count with  delay (problem when let replaced by var, 
@@ -84,7 +92,7 @@
 //         //inner();
 //         return inner;
 //     }
-//     return outer;
+//     return outer; //--> 10 Hello 201
 // }
 // let a=100;   // won't print 100 as the closure of 'inner' has already 'a' defined, but if it wasn't it would print 100 !!!!!!!!! 
 // outest()('Hello')();
@@ -289,7 +297,7 @@
 
 // Array.prototype.calculate = function(logic){
 //     const output = []
-//     for (let i = 0; i < this.length; i++){  // ths === radius as the calculate function called form 'radius' object
+//     for (let i = 0; i < this.length; i++){  // this === radius as the calculate function called form 'radius' object
 //         output.push(logic(this[i]))
 //     }
 //     return output
