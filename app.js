@@ -12,6 +12,13 @@
 // for (var i=0; i<3; i++){
 //     setTimeout(()=> console.log(i),1); /// ->333
 // }
+// // can be fixed by  the enclosure:
+// for (var i=0; i<3; i++){
+//     function inner(i){
+//         setTimeout(()=> console.log(i),1); /// ->333
+//     }
+//     inner(i);
+// }
 // for (let i=0; i<3; i++){
 //     setTimeout(()=> console.log(i),1); /// -> 012
 // }
@@ -300,15 +307,15 @@
 //     try{
 //         throw new Error();
 //     } catch (x){
-//         (x=1),(y=2);     // aas there is to y in this scope, y=2 assigned to the outer scope 
+//         (x=1),(y=2);     // as there is to y in this scope, y=2 assigned to the outer scope 
 //         console.log(x); // 1 - local  x in the cope of the 'catch' block
 //     }
-//     console.log(x);     // -> no 'x' assigned within a
+//     console.log(x);     // -> no 'x' assigned within a 
 //     console.log(y);     // -> 2
 // })();    /// "()" for return 
 //------------------------------------- EX-46 What's the output?
 // console.log ([[0,1], [2,3]].reduce((acc, cur)=> {return acc.concat(cur)}, [1,2]) )// -> [1, 2, 0, 1, 2, 3]
-//console.log ([[0,1], [2,3]].reduce((acc, cur)=> acc.concat(cur), [1,2]) )// -> [1, 2, 0, 1, 2, 3]
+// console.log ([[0,1], [2,3]].reduce((acc, cur)=> acc.concat(cur), [1,2]) )// -> [1, 2, 0, 1, 2, 3]
 //********************************************************************************************************* */
 //**************************** W E B I N A R  - 19 *******************************/
 /// *********** EX - 1 TEST EXTENDES///
@@ -316,14 +323,14 @@
 //     x=123; // if #x (private) then won't print, #x is visible inside class A (and it's methods)only. 
 //            // _x public.  to  access it from outside of a class we can add a getter (get x(){ return this.#x})   
 //            // inside the class and simple  access it from  outside by "b.x"
-//     //fooA() {return this.x}
+//            //fooA() {return this.x}
 // }
 // class B extends A {
 //     y=456;
 //     fooB(){}
 // }
 // let b = new B();
-// console.log(b);   // -> B { x: 123, y: 456 } 
+// console.log(b);   // -> B { x: 123, y: 456 }  
 // for (key in b){   // -> for of ? 
 //     console.log(key)
 // }
@@ -334,25 +341,16 @@
 // for (key in d){
 //     console.log(key)
 // }
-// console.log(d)   // -> { yy: 222 } prints only the property of the last inherited obj. 
-// to  print the whole obj including all properties of prototypes we must: console.log(d.xx, d.yy)
+//    // -> { yy: 222 } prints only the property of the last inherited obj. 
+// // to  print the whole obj including all properties of prototypes we must: console.log(d.xx, d.yy) or as above 
 
 /// *********** EX2  - TEST ITERATION
 // for...of could be used because array is iterable
-
-// let a1 = [11, 22, 33]
-// for (val of a1) {
-//     console.log(val)
-// }  
-// // all function call arguments are stored in property 'arguments' 
-// let it = a1[Symbol.iterator].call(a1) // implementing context of 'a1' inside function 'Symbol.iterator' from an array object 
-// let result = it.next();
-// while (!result.done){
-//     console.log(result.value);
-//     result = it.next();
+ 
 // }
 //********************************************************************
-// function foo(...args){
+// function foo(){         // thus, we can skip  of definding parameters in the brackets as the arguments in the function call 
+//                         // are streamed inside 'argument' method (property?)
 //     let argums = Array.from(arguments)
 //     console.log(typeof argums) // -> 'object' (since array is an object) // console.log(argums) will print the array !
 //     for (let arg of argums){
@@ -364,31 +362,31 @@
 //------------------------------------- EX-1 
 // create function getRandomNumber (min,max) where min - minimal value, max - max value
 //Example getRandomNumber(0, 1) -> returns number that is either 0 or 1
-//if min > max then swap the values swap should be without additional variable in one line code
+//if min > max then swap the values - swap should be without additional variable in one line code
 
 //  function getRandomNumber(min, max){
 //      if (min > max){
 //          [max, min] = [min, max]
-//      }
+//      } 
 //     return Math.round(min + Math.random()*(max - min))
 //  }
 // for (let i=0; i<10; i++) console.log(getRandomNumber(100,50))
 
-//------------------------------------- EX-2
-// create a function concatinate(prefix) that by using the following code:
-//   const concatApp = concatinate('App - ');
-//   const concatMessage = concatApp('Test status: Done');
-//   console.log(concatMessage); 
-//   will print -> "App - Test status: Done" 
+//------------------------------------- EX-2   (Closure exammple)
+// // create a function concatinate(prefix) that by using the following code:
+// //   const concatApp = concatinate('App - ');
+// //   const concatMessage = concatApp('Test status: Done');
+// //   console.log(concatMessage); 
+// //   will print -> "App - Test status: Done" 
 
 // function concatenate(prefix){
-// return (...args)=> [prefix,...args].join('') // join - to  concatenate all array's element into string. 
-// }
-// const concatApp  = concatenate('App - ');
-// const concatMessage = concatApp('Test satus: Done', ' good', ' very')
-// console.log(concatMessage) 
+// // return (...args)=> [prefix,...args].join('') // join - to  concatenate all array's element into string. 
+// // }
+// // const concatApp  =   concatenate('App - ');
+// // const concatMessage = concatApp('Test satus: Done', ' good', ' very')
+// // console.log(concatMessage) 
 
-// 02:25 countdown
+// // 02:25 countdown
 
 
 
